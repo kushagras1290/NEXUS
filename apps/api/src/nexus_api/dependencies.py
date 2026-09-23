@@ -1,4 +1,6 @@
-from typing import cast\n\nfrom fastapi import Request
+from typing import cast
+
+from fastapi import Request
 
 from .adapters.classic import OpenSearchRetriever
 from .adapters.embedding import FastEmbedder
@@ -28,4 +30,4 @@ def build_search_service(settings: Settings) -> SearchService:
 
 
 def get_search_service(request: Request) -> SearchService:
-    return request.app.state.search_service
+    return cast(SearchService, request.app.state.search_service)
