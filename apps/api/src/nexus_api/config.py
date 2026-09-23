@@ -41,6 +41,7 @@ class Settings(BaseSettings):
 
     search_limit_max: int = Field(default=50, ge=1, le=200)
     request_timeout_seconds: float = Field(default=5.0, gt=0.1, le=30)
+    dataset_path: str = "/data/full"
 
     @field_validator("cors_origins", mode="before")
     @classmethod
