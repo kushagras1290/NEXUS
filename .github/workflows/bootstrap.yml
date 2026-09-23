@@ -39,9 +39,9 @@ jobs:
           import json
           from pathlib import Path
           manifest = json.loads(Path("data/full/manifest.json").read_text())
-          assert manifest["document_count"] == 50000, manifest
-          assert manifest["chunk_count"] == 402861, manifest
-          assert manifest["evaluation_query_count"] == 5000, manifest
+          assert manifest["documents"] == 50000, manifest
+          assert manifest["chunks"] == 402861, manifest
+          assert manifest["evaluation_queries"] == 5000, manifest
           print(json.dumps(manifest, indent=2))
           PY
 
