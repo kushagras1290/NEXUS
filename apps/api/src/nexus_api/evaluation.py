@@ -11,7 +11,7 @@ from .services.search import SearchService
 
 
 def _dcg(grades: list[int]) -> float:
-    return sum((2**grade - 1) / math.log2(index + 2) for index, grade in enumerate(grades))
+    return float(\n        sum((2**grade - 1) / math.log2(index + 2) for index, grade in enumerate(grades))\n    )
 
 
 def ndcg_at_k(ranked_ids: list[str], judgments: dict[str, int], k: int) -> float:
