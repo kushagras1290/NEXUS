@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import argparse
 import gzip
+import io
 import hashlib
 import json
 import random
@@ -176,9 +177,14 @@ def sha(value: str) -> str:
 
 
 def write_jsonl_gz(path: Path, rows: list[dict[str, Any]]) -> None:
-    with gzip.open(path, "wt", encoding="utf-8") as handle:
-        for row in rows:
-            handle.write(json.dumps(row, ensure_ascii=False, separators=(",", ":")) + "\n")
+    # Fixed mtime + empty embedded filename make the compressed corpus byte-reproducible.
+    with path.open("wb") as raw:
+        with gzip.GzipFile(filename="", mode="wb", fileobj=raw, mtime=0) as compressed:
+            with io.TextIOWrapper(compressed, encoding="utf-8") as handle:
+                for row in rows:
+                    handle.write(
+                        json.dumps(row, ensure_ascii=False, separators=(",", ":")) + "\n"
+                    )
 
 
 def document_sections(title: str, topic: str, domain: str, country: str, owner: str, version: str, status: str, extra: bool) -> list[tuple[str, str]]:
@@ -212,7 +218,7 @@ def build_corpus(document_target: int, chunk_target: int, rng: random.Random) ->
     documents: list[dict[str, Any]] = []
     chunks: list[dict[str, Any]] = []
     global_index = 0
-    series_last: dict[tuple[str, str, str], str] = {}
+    series_last: dict[tuple[str, str, str], tuple[str, str]] = {}
 
     for domain, count in counts.items():
         for local_index in range(count):
@@ -226,9 +232,9 @@ def build_corpus(document_target: int, chunk_target: int, rng: random.Random) ->
             owner = f"{domain} Knowledge Team"
             doc_id = f"{prefix}-{global_index:06d}"
             series_key = (domain, topic, country)
-            previous = series_last.get(series_key)
-            if status == "ACTIVE":
-                series_last[series_key] = doc_id
+            last = series_last.get(series_key)
+            previous = last[0] if status == "ACTIVE" and last and last[1] == "ARCHIVED" else None
+            series_last[series_key] = (doc_id, status)
             error_code = None
             if domain in {"DevOps & SRE", "IT Support", "Cybersecurity"} and rng.random() < 0.20:
                 error_code = f"ERR-{prefix}-{rng.randint(1000, 9999)}"
