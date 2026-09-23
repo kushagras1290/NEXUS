@@ -42,8 +42,10 @@ jobs:
       - uses: actions/setup-node@v7
         with:
           node-version: "22"
+          cache: npm
+          cache-dependency-path: apps/web/package-lock.json
       - name: Install web dependencies
-        run: npm install --ignore-scripts
+        run: npm ci --ignore-scripts
         working-directory: apps/web
       - name: Typecheck
         run: npm run typecheck
