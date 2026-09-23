@@ -20,13 +20,13 @@ class Settings(BaseSettings):
     oidc_audience: str = "nexus-api"
     oidc_jwks_url: str = ""
 
-    opensearch_url: AnyHttpUrl = "http://localhost:9200"
+    opensearch_url: AnyHttpUrl = AnyHttpUrl("http://localhost:9200")
     opensearch_username: str = "admin"
     opensearch_password: str = "admin"
     opensearch_verify_certs: bool = False
     opensearch_index: str = "nexus-knowledge-v1"
 
-    qdrant_url: AnyHttpUrl = "http://localhost:6333"
+    qdrant_url: AnyHttpUrl = AnyHttpUrl("http://localhost:6333")
     qdrant_api_key: str = ""
     qdrant_collection: str = "nexus-knowledge-v1"
     embedding_model: str = "BAAI/bge-small-en-v1.5"
