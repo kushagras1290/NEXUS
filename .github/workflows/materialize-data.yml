@@ -1,0 +1,58 @@
+name: Materialize EUKB Dataset
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "tools/generate_eukb.py"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: materialize-eukb
+  cancel-in-progress: false
+
+jobs:
+  materialize:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - name: Generate canonical corpus
+        run: |
+          set -euo pipefail
+          rm -rf data/full
+          python tools/generate_eukb.py             --output data/full             --documents 50000             --eval-queries 5000
+      - name: Validate canonical shape
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          manifest = json.loads(Path("data/full/manifest.json").read_text())
+          validation = json.loads(Path("data/full/validation_report.json").read_text())
+
+          assert manifest["documents"] == 50_000
+          assert manifest["chunks"] == 402_861
+          assert manifest["evaluation_queries"] == 5_000
+          assert validation["document_ids_unique"] is True
+          assert validation["all_chunks_have_valid_parent"] is True
+          assert validation["all_eval_refs_resolve"] is True
+          PY
+      - name: Commit corpus if changed
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/full
+          if git diff --cached --quiet; then
+            echo "Canonical corpus already matches the generator."
+            exit 0
+          fi
+          git commit -m "data: materialize deterministic EUKB v1 corpus"
+          git push
