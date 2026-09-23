@@ -5,13 +5,16 @@ import json
 import math
 import statistics
 from pathlib import Path
+from typing import Any
 
 from .domain import RetrievalQuery, SearchFilters, UserContext
 from .services.search import SearchService
 
 
 def _dcg(grades: list[int]) -> float:
-    return float(\n        sum((2**grade - 1) / math.log2(index + 2) for index, grade in enumerate(grades))\n    )
+    return float(
+        sum((2**grade - 1) / math.log2(index + 2) for index, grade in enumerate(grades))
+    )
 
 
 def ndcg_at_k(ranked_ids: list[str], judgments: dict[str, int], k: int) -> float:
@@ -36,7 +39,10 @@ def reciprocal_rank(ranked_ids: list[str], judgments: dict[str, int]) -> float:
 
 
 async def evaluate(
-    service: SearchService, evaluation_file: Path, limit: int | None = None, k: int = 10
+    service: SearchService,
+    evaluation_file: Path,
+    limit: int | None = None,
+    k: int = 10,
 ) -> dict[str, object]:
     per_engine: dict[str, list[dict[str, float]]] = {"classic": [], "semantic": []}
     with gzip.open(evaluation_file, "rt", encoding="utf-8") as handle:
@@ -44,17 +50,28 @@ async def evaluate(
             if limit is not None and idx >= limit:
                 break
             item = json.loads(line)
+            if not isinstance(item, dict):
+                continue
+            raw_item = item
             query = RetrievalQuery(
-                text=item["query"],
+                text=str(raw_item["query"]),
                 limit=k,
                 user=UserContext(
-                    role=item["user_role"],
-                    department=item["user_department"],
-                    country=item["user_country"],
+                    role=str(raw_item["user_role"]),
+                    department=str(raw_item["user_department"]),
+                    country=str(raw_item["user_country"]),
                 ),
                 filters=SearchFilters(),
             )
-            judgments = {j["document_id"]: int(j["grade"]) for j in item["relevance_judgments"]}
+            raw_judgments = raw_item["relevance_judgments"]
+            if not isinstance(raw_judgments, list):
+                continue
+            judgments: dict[str, int] = {}
+            for raw_judgment in raw_judgments:
+                if not isinstance(raw_judgment, dict):
+                    continue
+                judgments[str(raw_judgment["document_id"])] = int(raw_judgment["grade"])
+
             comparison = await service.compare(query)
             for name, result in (
                 ("classic", comparison.classic),
@@ -70,14 +87,16 @@ async def evaluate(
                     }
                 )
 
-    summary: dict[str, object] = {}
+    summary: dict[str, Any] = {}
     for name, rows in per_engine.items():
         summary[name] = {
             "queries": len(rows),
             f"recall@{k}": statistics.fmean(row["recall"] for row in rows) if rows else 0.0,
             "mrr": statistics.fmean(row["mrr"] for row in rows) if rows else 0.0,
             f"ndcg@{k}": statistics.fmean(row["ndcg"] for row in rows) if rows else 0.0,
-            "p50_latency_ms": statistics.median(row["latency_ms"] for row in rows) if rows else 0.0,
+            "p50_latency_ms": statistics.median(row["latency_ms"] for row in rows)
+            if rows
+            else 0.0,
             "p95_latency_ms": sorted(row["latency_ms"] for row in rows)[
                 max(0, math.ceil(len(rows) * 0.95) - 1)
             ]
