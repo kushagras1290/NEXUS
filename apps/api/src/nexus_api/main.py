@@ -2,13 +2,15 @@ from __future__ import annotations
 
 import time
 import uuid
-from collections.abc import AsyncIterator\nfrom contextlib import asynccontextmanager
+from collections.abc import AsyncIterator
+from contextlib import asynccontextmanager
 
 import structlog
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import Response
-from prometheus_client import CONTENT_TYPE_LATEST, generate_latest\nfrom starlette.middleware.base import RequestResponseEndpoint
+from prometheus_client import CONTENT_TYPE_LATEST, generate_latest
+from starlette.middleware.base import RequestResponseEndpoint
 
 from .config import get_settings
 from .dependencies import build_search_service
@@ -24,13 +26,13 @@ log = structlog.get_logger("nexus.api")
 
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncIterator[None]:
-    app.state.search_service = build_search_service(settings)
+    service = build_search_service(settings)
+    app.state.search_service = service
     log.info("nexus_started", env=settings.env)
     try:
         yield
     finally:
-        semantic = app.state.search_service.semantic
-        close = getattr(semantic, "close", None)
+        close = getattr(service.semantic, "close", None)
         if close is not None:
             await close()
         log.info("nexus_stopped")
@@ -60,7 +62,10 @@ app.add_middleware(
 
 
 @app.middleware("http")
-async def request_context(\n    request: Request, call_next: RequestResponseEndpoint\n) -> Response:
+async def request_context(
+    request: Request,
+    call_next: RequestResponseEndpoint,
+) -> Response:
     request_id = request.headers.get("X-Request-ID") or str(uuid.uuid4())
     started = time.perf_counter()
     structlog.contextvars.bind_contextvars(request_id=request_id, path=request.url.path)
