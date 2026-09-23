@@ -1,0 +1,53 @@
+[build-system]
+requires = ["hatchling>=1.27,<2"]
+build-backend = "hatchling.build"
+
+[project]
+name = "nexus-api"
+version = "0.1.0"
+description = "NEXUS enterprise lexical/vector retrieval API"
+requires-python = ">=3.12,<3.14"
+dependencies = [
+  "fastapi>=0.141.1,<0.142",
+  "uvicorn[standard]>=0.35,<0.36",
+  "pydantic>=2.11,<3",
+  "pydantic-settings>=2.10,<3",
+  "opensearch-py>=3.2,<3.3",
+  "qdrant-client[fastembed]>=1.19.1,<1.20",
+  "PyJWT[crypto]>=2.10,<3",
+  "httpx>=0.28,<0.29",
+  "structlog>=25.4,<26",
+  "prometheus-client>=0.22,<0.23",
+  "typer>=0.16,<0.17",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.4,<9",
+  "pytest-asyncio>=1.1,<2",
+  "pytest-cov>=6.2,<7",
+  "mypy>=1.17,<2",
+  "ruff>=0.12,<0.13",
+]
+
+[project.scripts]
+nexus-api = "nexus_api.cli:app"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/nexus_api"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "ASYNC"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+packages = ["nexus_api"]

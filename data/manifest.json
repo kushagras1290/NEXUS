@@ -1,0 +1,25 @@
+{
+  "dataset_name": "NEXUS Enterprise Unified Knowledge Base (EUKB) v1",
+  "company": "Northstar Digital Services",
+  "company_is_fictional": true,
+  "seed": 20260923,
+  "generated_at": "2026-09-23",
+  "document_count": 50000,
+  "chunk_count": 402861,
+  "evaluation_query_count": 5000,
+  "domains": {
+    "Software Engineering": 10000,
+    "DevOps & SRE": 7000,
+    "Cloud": 4000,
+    "Cybersecurity": 4000,
+    "Human Resources": 7000,
+    "IT Support": 5000,
+    "Project Delivery": 3500,
+    "Finance & Benefits": 2500,
+    "Compliance & Legal": 2000,
+    "Learning & Development": 2000,
+    "Organisation & Directory": 3000
+  },
+  "purpose": "Benchmark classical lexical retrieval against vector/semantic retrieval on the same enterprise knowledge corpus.",
+  "license_note": "Synthetic research/demo corpus. No confidential company data is included."
+}

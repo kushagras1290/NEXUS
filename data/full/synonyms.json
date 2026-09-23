@@ -1,0 +1,61 @@
+{
+  "work from home": [
+    "WFH",
+    "remote work",
+    "remote working",
+    "telecommuting"
+  ],
+  "Kubernetes": [
+    "K8s",
+    "kube"
+  ],
+  "Identity and Access Management": [
+    "IAM",
+    "identity access management"
+  ],
+  "multi-factor authentication": [
+    "MFA",
+    "2FA",
+    "two-factor authentication"
+  ],
+  "paid time off": [
+    "PTO",
+    "annual leave",
+    "vacation leave"
+  ],
+  "continuous integration": [
+    "CI",
+    "CI/CD",
+    "build pipeline"
+  ],
+  "continuous delivery": [
+    "CD",
+    "deployment pipeline",
+    "release pipeline"
+  ],
+  "site reliability engineering": [
+    "SRE",
+    "production engineering"
+  ],
+  "pull request": [
+    "PR",
+    "merge request"
+  ],
+  "database": [
+    "DB",
+    "data store"
+  ],
+  "Amazon Web Services": [
+    "AWS"
+  ],
+  "single sign-on": [
+    "SSO"
+  ],
+  "personal identifiable information": [
+    "PII",
+    "personal data"
+  ],
+  "service level objective": [
+    "SLO"
+  ]
+}

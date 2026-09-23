@@ -1,0 +1,192 @@
+{
+  "Software Engineering": {
+    "topics": [
+      "FastAPI service standard",
+      "REST versioning",
+      "PostgreSQL indexing",
+      "Kafka event design",
+      "React standards",
+      "dependency pinning",
+      "API idempotency",
+      "contract testing",
+      "database migration safety"
+    ],
+    "roles": [
+      "employee",
+      "engineer",
+      "tech_lead",
+      "architect"
+    ]
+  },
+  "DevOps & SRE": {
+    "topics": [
+      "connection pool exhaustion",
+      "HTTP 503 spike",
+      "Kubernetes rollback",
+      "certificate expiry",
+      "SLOs",
+      "queue backlog",
+      "replication lag",
+      "emergency release",
+      "node pressure"
+    ],
+    "roles": [
+      "employee",
+      "engineer",
+      "sre",
+      "tech_lead"
+    ]
+  },
+  "Cloud": {
+    "topics": [
+      "approved regions",
+      "data residency",
+      "IAM roles",
+      "landing zones",
+      "cost controls",
+      "RDS deployment",
+      "EKS baseline",
+      "budget alerts"
+    ],
+    "roles": [
+      "employee",
+      "engineer",
+      "cloud_engineer",
+      "architect"
+    ]
+  },
+  "Cybersecurity": {
+    "topics": [
+      "MFA",
+      "privileged access",
+      "secret rotation",
+      "PII handling",
+      "phishing response",
+      "service accounts",
+      "dependency scanning",
+      "credential compromise"
+    ],
+    "roles": [
+      "employee",
+      "engineer",
+      "security",
+      "manager"
+    ]
+  },
+  "Human Resources": {
+    "topics": [
+      "annual leave",
+      "work from home",
+      "probation",
+      "maternity leave",
+      "notice period",
+      "leave carry forward",
+      "health insurance",
+      "performance review",
+      "employee referrals"
+    ],
+    "roles": [
+      "employee",
+      "manager",
+      "hr"
+    ]
+  },
+  "IT Support": {
+    "topics": [
+      "MFA reset",
+      "password reset",
+      "VPN",
+      "laptop replacement",
+      "Docker installation",
+      "account lockout",
+      "new phone enrollment",
+      "email setup",
+      "admin privileges"
+    ],
+    "roles": [
+      "employee",
+      "manager",
+      "it_support"
+    ]
+  },
+  "Project Delivery": {
+    "topics": [
+      "release readiness",
+      "change control",
+      "UAT",
+      "risk register",
+      "definition of done",
+      "design review",
+      "project closure"
+    ],
+    "roles": [
+      "employee",
+      "engineer",
+      "project_manager",
+      "manager"
+    ]
+  },
+  "Finance & Benefits": {
+    "topics": [
+      "travel reimbursement",
+      "software procurement",
+      "salary cycle",
+      "tax declarations",
+      "expense deadlines",
+      "vendor onboarding",
+      "payroll corrections"
+    ],
+    "roles": [
+      "employee",
+      "manager",
+      "finance"
+    ]
+  },
+  "Compliance & Legal": {
+    "topics": [
+      "GDPR handling",
+      "NDA",
+      "retention",
+      "cross-border transfer",
+      "litigation hold",
+      "SOW approval",
+      "secure disposal"
+    ],
+    "roles": [
+      "employee",
+      "manager",
+      "legal",
+      "compliance"
+    ]
+  },
+  "Learning & Development": {
+    "topics": [
+      "Python learning path",
+      "cloud certification",
+      "security training",
+      "new manager training",
+      "privacy training",
+      "Kubernetes learning path"
+    ],
+    "roles": [
+      "employee",
+      "manager",
+      "hr"
+    ]
+  },
+  "Organisation & Directory": {
+    "topics": [
+      "service owner",
+      "SEV1 contacts",
+      "security escalation",
+      "platform engineering",
+      "data owner",
+      "product owner",
+      "HR escalation"
+    ],
+    "roles": [
+      "employee",
+      "manager"
+    ]
+  }
+}

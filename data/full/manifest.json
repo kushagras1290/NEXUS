@@ -1,0 +1,34 @@
+{
+  "dataset_name": "NEXUS Enterprise Unified Knowledge Base (EUKB) v1",
+  "company_is_fictional": true,
+  "seed": 20260923,
+  "documents": 50000,
+  "chunks": 402861,
+  "evaluation_queries": 5000,
+  "domain_counts": {
+    "Software Engineering": 10000,
+    "DevOps & SRE": 7000,
+    "Cloud": 4000,
+    "Cybersecurity": 4000,
+    "Human Resources": 7000,
+    "IT Support": 5000,
+    "Project Delivery": 3500,
+    "Finance & Benefits": 2500,
+    "Compliance & Legal": 2000,
+    "Learning & Development": 2000,
+    "Organisation & Directory": 3000
+  },
+  "query_type_counts": {
+    "semantic_paraphrase": 1000,
+    "exact_terminology": 800,
+    "identifier_error_code": 500,
+    "acronym": 500,
+    "typo_fuzzy": 500,
+    "multi_condition": 500,
+    "ambiguous": 400,
+    "policy_version": 400,
+    "cross_domain": 200,
+    "permission_sensitive": 200
+  },
+  "synthetic": true
+}

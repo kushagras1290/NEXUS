@@ -1,0 +1,563 @@
+{
+  "Software Engineering": {
+    "document_types": [
+      "technical_standard",
+      "architecture_decision_record",
+      "api_guide",
+      "coding_standard",
+      "migration_guide",
+      "known_issue",
+      "design_note"
+    ],
+    "owner_teams": [
+      "Backend Platform",
+      "Frontend Platform",
+      "Architecture Guild",
+      "Developer Experience",
+      "Data Platform"
+    ],
+    "categories": {
+      "Python Backend": [
+        "FastAPI service standard",
+        "dependency pinning",
+        "async I/O",
+        "Pydantic contracts",
+        "pytest strategy",
+        "Python runtime"
+      ],
+      "Java Services": [
+        "Spring Boot standard",
+        "JVM tuning",
+        "dependency management",
+        "service templates",
+        "Gradle builds",
+        "Java runtime"
+      ],
+      "APIs": [
+        "REST versioning",
+        "idempotency",
+        "pagination",
+        "rate limiting",
+        "OpenAPI contracts",
+        "error envelopes"
+      ],
+      "Databases": [
+        "PostgreSQL schema changes",
+        "indexing",
+        "connection pooling",
+        "read replicas",
+        "migration safety",
+        "transaction boundaries"
+      ],
+      "Messaging": [
+        "Kafka event design",
+        "consumer retries",
+        "dead-letter queues",
+        "schema evolution",
+        "ordering",
+        "exactly-once semantics"
+      ],
+      "Testing": [
+        "unit testing",
+        "contract testing",
+        "integration testing",
+        "test data",
+        "coverage policy",
+        "end-to-end testing"
+      ],
+      "Architecture": [
+        "service boundaries",
+        "ADR process",
+        "monolith decomposition",
+        "caching",
+        "event-driven design",
+        "backpressure"
+      ],
+      "Frontend": [
+        "React standards",
+        "Next.js rendering",
+        "accessibility",
+        "design tokens",
+        "state management",
+        "performance budgets"
+      ]
+    }
+  },
+  "DevOps & SRE": {
+    "document_types": [
+      "runbook",
+      "incident_report",
+      "postmortem",
+      "operational_standard",
+      "on_call_guide",
+      "capacity_plan"
+    ],
+    "owner_teams": [
+      "Site Reliability Engineering",
+      "Platform Operations",
+      "Production Engineering",
+      "Observability Team"
+    ],
+    "categories": {
+      "Incidents": [
+        "database saturation",
+        "HTTP 503 spike",
+        "memory pressure",
+        "CPU throttling",
+        "queue backlog",
+        "certificate expiry"
+      ],
+      "Kubernetes": [
+        "pod crash loops",
+        "resource requests",
+        "autoscaling",
+        "node pressure",
+        "deployment rollback",
+        "secret rotation"
+      ],
+      "Observability": [
+        "SLOs",
+        "alert routing",
+        "log retention",
+        "distributed tracing",
+        "dashboard standards",
+        "error budgets"
+      ],
+      "Databases": [
+        "connection pool exhaustion",
+        "replication lag",
+        "deadlocks",
+        "slow queries",
+        "storage growth",
+        "failover"
+      ],
+      "Release": [
+        "canary deployment",
+        "blue-green deployment",
+        "emergency release",
+        "rollback",
+        "change freeze",
+        "release approvals"
+      ]
+    }
+  },
+  "Cloud": {
+    "document_types": [
+      "cloud_policy",
+      "service_guide",
+      "reference_architecture",
+      "cost_standard",
+      "region_policy",
+      "iam_guide"
+    ],
+    "owner_teams": [
+      "Cloud Platform",
+      "FinOps",
+      "Cloud Governance",
+      "Infrastructure Architecture"
+    ],
+    "categories": {
+      "AWS": [
+        "approved regions",
+        "IAM roles",
+        "S3 encryption",
+        "RDS deployment",
+        "EKS baseline",
+        "VPC design"
+      ],
+      "Azure": [
+        "approved regions",
+        "managed identities",
+        "Blob storage",
+        "AKS baseline",
+        "Key Vault",
+        "networking"
+      ],
+      "Cost": [
+        "tagging standard",
+        "reserved capacity",
+        "budget alerts",
+        "idle resources",
+        "showback",
+        "rightsizing"
+      ],
+      "Governance": [
+        "data residency",
+        "landing zones",
+        "account vending",
+        "resource policies",
+        "service approval",
+        "exception process"
+      ]
+    }
+  },
+  "Cybersecurity": {
+    "document_types": [
+      "security_policy",
+      "security_standard",
+      "response_playbook",
+      "access_policy",
+      "vulnerability_guide",
+      "threat_model"
+    ],
+    "owner_teams": [
+      "Information Security",
+      "Security Operations",
+      "Identity Security",
+      "Application Security"
+    ],
+    "categories": {
+      "Identity": [
+        "MFA",
+        "privileged access",
+        "service accounts",
+        "password policy",
+        "access reviews",
+        "break-glass accounts"
+      ],
+      "Application Security": [
+        "SAST",
+        "DAST",
+        "dependency scanning",
+        "secret scanning",
+        "threat modeling",
+        "secure coding"
+      ],
+      "Incident Response": [
+        "phishing response",
+        "malware response",
+        "credential compromise",
+        "data leak",
+        "ransomware",
+        "security escalation"
+      ],
+      "Data Protection": [
+        "encryption",
+        "key rotation",
+        "PII handling",
+        "data classification",
+        "retention",
+        "secure deletion"
+      ]
+    }
+  },
+  "Human Resources": {
+    "document_types": [
+      "policy",
+      "employee_handbook",
+      "faq",
+      "manager_guide",
+      "procedure",
+      "benefit_guide"
+    ],
+    "owner_teams": [
+      "People Operations",
+      "HR Shared Services",
+      "Talent Management",
+      "Compensation & Benefits"
+    ],
+    "categories": {
+      "Leave": [
+        "annual leave",
+        "sick leave",
+        "maternity leave",
+        "paternity leave",
+        "bereavement leave",
+        "leave carry forward"
+      ],
+      "Remote Work": [
+        "work from home",
+        "hybrid schedule",
+        "temporary remote work",
+        "home office support",
+        "remote-work exceptions",
+        "office attendance"
+      ],
+      "Employment": [
+        "probation",
+        "notice period",
+        "internal transfer",
+        "promotion cycle",
+        "background verification",
+        "employee referrals"
+      ],
+      "Benefits": [
+        "health insurance",
+        "wellbeing allowance",
+        "retirement benefits",
+        "life insurance",
+        "meal benefits",
+        "transport benefits"
+      ],
+      "Performance": [
+        "goal setting",
+        "mid-year review",
+        "annual review",
+        "performance improvement",
+        "manager calibration",
+        "feedback"
+      ],
+      "Onboarding": [
+        "day-one checklist",
+        "identity documents",
+        "equipment",
+        "orientation",
+        "buddy program",
+        "mandatory training"
+      ]
+    }
+  },
+  "IT Support": {
+    "document_types": [
+      "support_article",
+      "troubleshooting_guide",
+      "service_catalog",
+      "how_to",
+      "known_issue"
+    ],
+    "owner_teams": [
+      "Enterprise IT",
+      "Service Desk",
+      "Workplace Technology",
+      "Identity Support"
+    ],
+    "categories": {
+      "Identity": [
+        "password reset",
+        "MFA reset",
+        "account lockout",
+        "SSO issue",
+        "new phone enrollment",
+        "access request"
+      ],
+      "Endpoint": [
+        "laptop replacement",
+        "disk encryption",
+        "Docker installation",
+        "admin privileges",
+        "OS upgrade",
+        "device compliance"
+      ],
+      "Network": [
+        "VPN",
+        "Wi-Fi",
+        "proxy",
+        "DNS",
+        "remote access",
+        "network certificate"
+      ],
+      "Collaboration": [
+        "email setup",
+        "calendar issue",
+        "Teams access",
+        "Slack access",
+        "shared mailbox",
+        "distribution list"
+      ]
+    }
+  },
+  "Project Delivery": {
+    "document_types": [
+      "delivery_standard",
+      "sdlc_guide",
+      "quality_gate",
+      "release_checklist",
+      "project_template",
+      "governance_policy"
+    ],
+    "owner_teams": [
+      "Delivery Excellence",
+      "PMO",
+      "Quality Engineering",
+      "Release Governance"
+    ],
+    "categories": {
+      "SDLC": [
+        "requirements",
+        "design review",
+        "development",
+        "testing",
+        "release",
+        "retrospective"
+      ],
+      "Governance": [
+        "risk register",
+        "change control",
+        "steering committee",
+        "status reporting",
+        "RAID log",
+        "project closure"
+      ],
+      "Quality": [
+        "definition of done",
+        "quality gates",
+        "defect severity",
+        "UAT",
+        "release readiness",
+        "test evidence"
+      ]
+    }
+  },
+  "Finance & Benefits": {
+    "document_types": [
+      "finance_policy",
+      "expense_guide",
+      "procurement_policy",
+      "benefit_policy",
+      "faq"
+    ],
+    "owner_teams": [
+      "Corporate Finance",
+      "Procurement",
+      "Payroll",
+      "Compensation & Benefits"
+    ],
+    "categories": {
+      "Expenses": [
+        "travel reimbursement",
+        "meal reimbursement",
+        "client expense",
+        "home office expense",
+        "receipt requirements",
+        "expense deadlines"
+      ],
+      "Procurement": [
+        "purchase orders",
+        "vendor onboarding",
+        "software procurement",
+        "approval limits",
+        "renewals",
+        "contract routing"
+      ],
+      "Payroll": [
+        "salary cycle",
+        "tax declarations",
+        "payslips",
+        "bank changes",
+        "bonus payment",
+        "payroll corrections"
+      ]
+    }
+  },
+  "Compliance & Legal": {
+    "document_types": [
+      "compliance_policy",
+      "legal_guideline",
+      "privacy_policy",
+      "retention_schedule",
+      "contract_guide"
+    ],
+    "owner_teams": [
+      "Legal",
+      "Privacy Office",
+      "Compliance",
+      "Records Management"
+    ],
+    "categories": {
+      "Privacy": [
+        "GDPR handling",
+        "data subject request",
+        "PII processing",
+        "privacy incident",
+        "cookie compliance",
+        "cross-border transfer"
+      ],
+      "Contracts": [
+        "NDA",
+        "MSA review",
+        "SOW approval",
+        "contract signature",
+        "vendor terms",
+        "customer terms"
+      ],
+      "Records": [
+        "retention",
+        "litigation hold",
+        "secure disposal",
+        "records classification",
+        "legal preservation",
+        "email retention"
+      ]
+    }
+  },
+  "Learning & Development": {
+    "document_types": [
+      "learning_path",
+      "certification_guide",
+      "training_policy",
+      "course_catalog",
+      "skills_framework"
+    ],
+    "owner_teams": [
+      "Learning & Development",
+      "Engineering Academy",
+      "Leadership Academy"
+    ],
+    "categories": {
+      "Technical": [
+        "Python learning path",
+        "cloud certification",
+        "Kubernetes learning path",
+        "security training",
+        "data engineering",
+        "frontend engineering"
+      ],
+      "Leadership": [
+        "new manager training",
+        "feedback skills",
+        "coaching",
+        "stakeholder management",
+        "conflict management",
+        "hiring"
+      ],
+      "Mandatory": [
+        "security awareness",
+        "privacy training",
+        "code of conduct",
+        "anti-bribery",
+        "workplace safety",
+        "insider-risk"
+      ]
+    }
+  },
+  "Organisation & Directory": {
+    "document_types": [
+      "team_profile",
+      "service_directory",
+      "ownership_record",
+      "business_unit_guide",
+      "escalation_directory"
+    ],
+    "owner_teams": [
+      "Enterprise Architecture",
+      "People Operations",
+      "Service Management"
+    ],
+    "categories": {
+      "Teams": [
+        "platform engineering",
+        "payments",
+        "identity",
+        "data platform",
+        "security operations",
+        "enterprise IT"
+      ],
+      "Ownership": [
+        "service owner",
+        "system owner",
+        "data owner",
+        "on-call owner",
+        "product owner",
+        "business owner"
+      ],
+      "Escalation": [
+        "SEV1 contacts",
+        "HR escalation",
+        "security escalation",
+        "finance escalation",
+        "customer escalation",
+        "vendor escalation"
+      ]
+    }
+  }
+}

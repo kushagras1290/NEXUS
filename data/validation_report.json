@@ -1,0 +1,41 @@
+{
+  "document_ids_unique": true,
+  "all_chunks_have_valid_parent": true,
+  "all_eval_refs_resolve": true,
+  "documents": 50000,
+  "chunks": 402861,
+  "evaluation_queries": 5000,
+  "status_counts": {
+    "ACTIVE": 36608,
+    "ARCHIVED": 12065,
+    "DRAFT": 1327
+  },
+  "classification_counts": {
+    "INTERNAL": 35003,
+    "EMPLOYEE": 12095,
+    "CONFIDENTIAL": 2902
+  },
+  "query_type_counts": {
+    "semantic_paraphrase": 1000,
+    "exact_terminology": 800,
+    "identifier_error_code": 500,
+    "acronym": 500,
+    "typo_fuzzy": 500,
+    "multi_condition": 500,
+    "ambiguous": 400,
+    "policy_version": 400,
+    "cross_domain": 200,
+    "permission_sensitive": 200
+  },
+  "country_counts": {
+    "GLOBAL": 18586,
+    "IN": 8421,
+    "US": 6929,
+    "UK": 5674,
+    "SG": 3679,
+    "AU": 3633,
+    "IE": 3078
+  },
+  "parquet_written": false,
+  "parquet_error": "ModuleNotFoundError(\"No module named 'pyarrow'\")"
+}

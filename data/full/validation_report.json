@@ -1,0 +1,20 @@
+{
+  "document_ids_unique": true,
+  "all_chunks_have_valid_parent": true,
+  "all_eval_refs_resolve": true,
+  "documents": 50000,
+  "chunks": 402861,
+  "evaluation_queries": 5000,
+  "query_type_counts": {
+    "semantic_paraphrase": 1000,
+    "exact_terminology": 800,
+    "identifier_error_code": 500,
+    "acronym": 500,
+    "typo_fuzzy": 500,
+    "multi_condition": 500,
+    "ambiguous": 400,
+    "policy_version": 400,
+    "cross_domain": 200,
+    "permission_sensitive": 200
+  }
+}
