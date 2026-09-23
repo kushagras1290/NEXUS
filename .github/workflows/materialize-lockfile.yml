@@ -1,0 +1,41 @@
+name: Materialize Web Lockfile
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "apps/web/package.json"
+      - ".github/workflows/materialize-lockfile.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: materialize-web-lockfile
+  cancel-in-progress: false
+
+jobs:
+  lockfile:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+      - name: Resolve locked dependency graph
+        working-directory: apps/web
+        run: npm install --package-lock-only --ignore-scripts
+      - name: Commit lockfile if changed
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add apps/web/package-lock.json
+          if git diff --cached --quiet; then
+            echo "Lockfile already current."
+            exit 0
+          fi
+          git commit -m "chore(web): materialize npm lockfile"
+          git push
