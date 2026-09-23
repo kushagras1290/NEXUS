@@ -1,4 +1,11 @@
-from nexus_api.domain import EngineResult, RetrievalQuery, SearchFilters, SearchHit, SearchMode, UserContext
+from nexus_api.domain import (
+    EngineResult,
+    RetrievalQuery,
+    SearchFilters,
+    SearchHit,
+    SearchMode,
+    UserContext,
+)
 from nexus_api.services.search import SearchService
 
 

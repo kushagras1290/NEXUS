@@ -33,7 +33,9 @@ def evaluate_command(
     async def run() -> dict[str, object]:
         service = build_search_service(get_settings())
         try:
-            return await evaluate(service, dataset / "evaluation_queries.jsonl.gz", limit=limit, k=k)
+            return await evaluate(
+                service, dataset / "evaluation_queries.jsonl.gz", limit=limit, k=k
+            )
         finally:
             close = getattr(service.semantic, "close", None)
             if close is not None:

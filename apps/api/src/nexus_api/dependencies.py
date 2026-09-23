@@ -1,11 +1,9 @@
-from functools import lru_cache
-
-from fastapi import Depends, Request
+from fastapi import Request
 
 from .adapters.classic import OpenSearchRetriever
 from .adapters.embedding import FastEmbedder
 from .adapters.vector import QdrantRetriever
-from .config import Settings, get_settings
+from .config import Settings
 from .services.search import SearchService
 
 

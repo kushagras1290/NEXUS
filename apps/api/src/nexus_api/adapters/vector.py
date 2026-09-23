@@ -30,7 +30,9 @@ class QdrantRetriever:
     def _filter(query: RetrievalQuery) -> models.Filter:
         must: list[models.FieldCondition] = [
             models.FieldCondition(key="status", match=models.MatchValue(value="ACTIVE")),
-            models.FieldCondition(key="allowed_roles", match=models.MatchAny(any=[query.user.role])),
+            models.FieldCondition(
+                key="allowed_roles", match=models.MatchAny(any=[query.user.role])
+            ),
             models.FieldCondition(
                 key="acl_departments", match=models.MatchAny(any=["*", query.user.department])
             ),
@@ -46,7 +48,9 @@ class QdrantRetriever:
             )
         if query.filters.category:
             must.append(
-                models.FieldCondition(key="category", match=models.MatchAny(any=query.filters.category))
+                models.FieldCondition(
+                    key="category", match=models.MatchAny(any=query.filters.category)
+                )
             )
         if query.filters.document_type:
             must.append(
@@ -56,7 +60,9 @@ class QdrantRetriever:
             )
         if query.filters.country:
             must.append(
-                models.FieldCondition(key="country", match=models.MatchAny(any=query.filters.country))
+                models.FieldCondition(
+                    key="country", match=models.MatchAny(any=query.filters.country)
+                )
             )
         return models.Filter(must=must)
 

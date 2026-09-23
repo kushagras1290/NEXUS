@@ -1,5 +1,4 @@
 import pytest
-from pydantic import ValidationError
 
 from nexus_api.config import Settings
 

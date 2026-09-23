@@ -51,7 +51,9 @@ async def get_user_context(
         )
 
     if not authorization or not authorization.startswith("Bearer "):
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Bearer token required")
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Bearer token required"
+        )
 
     token = authorization.removeprefix("Bearer ").strip()
     verifier = OIDCVerifier(
@@ -62,7 +64,9 @@ async def get_user_context(
     try:
         claims = await asyncio.to_thread(verifier.verify, token)
     except (jwt.PyJWTError, httpx.HTTPError, ValueError) as exc:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token") from exc
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token"
+        ) from exc
 
     return UserContext(
         subject=_claim_as_string(claims, "sub", "unknown"),

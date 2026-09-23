@@ -41,7 +41,9 @@ async def classic_search(
         return result
     except Exception as exc:
         SEARCH_REQUESTS.labels(engine="classic", status="error").inc()
-        raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail="Classic search unavailable") from exc
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail="Classic search unavailable"
+        ) from exc
 
 
 @router.post("/semantic", response_model=EngineResult)
@@ -57,7 +59,9 @@ async def semantic_search(
         return result
     except Exception as exc:
         SEARCH_REQUESTS.labels(engine="semantic", status="error").inc()
-        raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail="Semantic search unavailable") from exc
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail="Semantic search unavailable"
+        ) from exc
 
 
 @router.post("/compare", response_model=CompareResult)
@@ -74,4 +78,6 @@ async def compare_search(
         return result
     except Exception as exc:
         SEARCH_REQUESTS.labels(engine="compare", status="error").inc()
-        raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail="Compare search unavailable") from exc
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail="Compare search unavailable"
+        ) from exc

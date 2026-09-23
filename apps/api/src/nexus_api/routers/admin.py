@@ -28,8 +28,14 @@ async def overview(
     classic, semantic = await asyncio.gather(service.classic.health(), service.semantic.health())
     return {
         "engines": {
-            "classic": {"status": "healthy" if classic else "unavailable", "index": settings.opensearch_index},
-            "semantic": {"status": "healthy" if semantic else "unavailable", "collection": settings.qdrant_collection},
+            "classic": {
+                "status": "healthy" if classic else "unavailable",
+                "index": settings.opensearch_index,
+            },
+            "semantic": {
+                "status": "healthy" if semantic else "unavailable",
+                "collection": settings.qdrant_collection,
+            },
         },
         "dataset": {
             "name": "EUKB v1",

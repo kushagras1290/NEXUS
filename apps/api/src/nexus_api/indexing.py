@@ -79,7 +79,9 @@ def _normalized_payload(chunk: dict[str, object], document: dict[str, object]) -
     }
 
 
-def index_dataset(settings: Settings, dataset: Path, limit: int | None = None, batch_size: int = 256) -> dict[str, int]:
+def index_dataset(
+    settings: Settings, dataset: Path, limit: int | None = None, batch_size: int = 256
+) -> dict[str, int]:
     documents = {
         str(item["document_id"]): item
         for item in read_jsonl_gz(dataset / "documents.jsonl.gz", limit=None)
@@ -89,11 +91,15 @@ def index_dataset(settings: Settings, dataset: Path, limit: int | None = None, b
     os_client = opensearch_client(settings)
     ensure_classic_index(os_client, settings.opensearch_index)
 
-    qdrant = QdrantClient(url=str(settings.qdrant_url), api_key=settings.qdrant_api_key or None, timeout=60)
+    qdrant = QdrantClient(
+        url=str(settings.qdrant_url), api_key=settings.qdrant_api_key or None, timeout=60
+    )
     if not qdrant.collection_exists(settings.qdrant_collection):
         qdrant.create_collection(
             collection_name=settings.qdrant_collection,
-            vectors_config=models.VectorParams(size=settings.vector_size, distance=models.Distance.COSINE),
+            vectors_config=models.VectorParams(
+                size=settings.vector_size, distance=models.Distance.COSINE
+            ),
             hnsw_config=models.HnswConfigDiff(m=16, ef_construct=128),
         )
     embedder = FastEmbedder(settings.embedding_model)
@@ -116,12 +122,22 @@ def index_dataset(settings: Settings, dataset: Path, limit: int | None = None, b
         ]
         qdrant.upsert(collection_name=settings.qdrant_collection, points=points, wait=True)
         indexed += len(classic_actions)
-        classic_actions.clear(); vector_payloads.clear(); vector_ids.clear(); vector_texts.clear()
+        classic_actions.clear()
+        vector_payloads.clear()
+        vector_ids.clear()
+        vector_texts.clear()
 
     for chunk in chunks:
         doc = documents[str(chunk["document_id"])]
         payload = _normalized_payload(chunk, doc)
-        classic_actions.append({"_op_type": "index", "_index": settings.opensearch_index, "_id": chunk["chunk_id"], "_source": payload})
+        classic_actions.append(
+            {
+                "_op_type": "index",
+                "_index": settings.opensearch_index,
+                "_id": chunk["chunk_id"],
+                "_source": payload,
+            }
+        )
         vector_ids.append(str(uuid.uuid5(NAMESPACE, str(chunk["chunk_id"]))))
         vector_payloads.append(payload)
         vector_texts.append(str(payload["text"]))

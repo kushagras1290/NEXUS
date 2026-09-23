@@ -58,8 +58,17 @@ class OpenSearchRetriever:
             "size": query.limit,
             "track_total_hits": False,
             "_source": [
-                "chunk_id", "document_id", "title", "text", "department", "category",
-                "subcategory", "document_type", "country", "version", "owner_team",
+                "chunk_id",
+                "document_id",
+                "title",
+                "text",
+                "department",
+                "category",
+                "subcategory",
+                "document_type",
+                "country",
+                "version",
+                "owner_team",
             ],
             "query": {
                 "bool": {
@@ -72,7 +81,11 @@ class OpenSearchRetriever:
                             "multi_match": {
                                 "query": query.text,
                                 "fields": [
-                                    "title^4", "subcategory^3", "category^2", "keywords^2", "text"
+                                    "title^4",
+                                    "subcategory^3",
+                                    "category^2",
+                                    "keywords^2",
+                                    "text",
                                 ],
                                 "type": "best_fields",
                                 "operator": "or",

@@ -4,7 +4,6 @@ import gzip
 import json
 import math
 import statistics
-import time
 from pathlib import Path
 
 from .domain import RetrievalQuery, SearchFilters, UserContext
@@ -36,7 +35,9 @@ def reciprocal_rank(ranked_ids: list[str], judgments: dict[str, int]) -> float:
     return 0.0
 
 
-async def evaluate(service: SearchService, evaluation_file: Path, limit: int | None = None, k: int = 10) -> dict[str, object]:
+async def evaluate(
+    service: SearchService, evaluation_file: Path, limit: int | None = None, k: int = 10
+) -> dict[str, object]:
     per_engine: dict[str, list[dict[str, float]]] = {"classic": [], "semantic": []}
     with gzip.open(evaluation_file, "rt", encoding="utf-8") as handle:
         for idx, line in enumerate(handle):
@@ -46,19 +47,28 @@ async def evaluate(service: SearchService, evaluation_file: Path, limit: int | N
             query = RetrievalQuery(
                 text=item["query"],
                 limit=k,
-                user=UserContext(role=item["user_role"], department=item["user_department"], country=item["user_country"]),
+                user=UserContext(
+                    role=item["user_role"],
+                    department=item["user_department"],
+                    country=item["user_country"],
+                ),
                 filters=SearchFilters(),
             )
             judgments = {j["document_id"]: int(j["grade"]) for j in item["relevance_judgments"]}
             comparison = await service.compare(query)
-            for name, result in (("classic", comparison.classic), ("semantic", comparison.semantic)):
+            for name, result in (
+                ("classic", comparison.classic),
+                ("semantic", comparison.semantic),
+            ):
                 ranked = [hit.document_id for hit in result.hits]
-                per_engine[name].append({
-                    "recall": recall_at_k(ranked, judgments, k),
-                    "mrr": reciprocal_rank(ranked, judgments),
-                    "ndcg": ndcg_at_k(ranked, judgments, k),
-                    "latency_ms": result.latency_ms,
-                })
+                per_engine[name].append(
+                    {
+                        "recall": recall_at_k(ranked, judgments, k),
+                        "mrr": reciprocal_rank(ranked, judgments),
+                        "ndcg": ndcg_at_k(ranked, judgments, k),
+                        "latency_ms": result.latency_ms,
+                    }
+                )
 
     summary: dict[str, object] = {}
     for name, rows in per_engine.items():
@@ -68,6 +78,10 @@ async def evaluate(service: SearchService, evaluation_file: Path, limit: int | N
             "mrr": statistics.fmean(row["mrr"] for row in rows) if rows else 0.0,
             f"ndcg@{k}": statistics.fmean(row["ndcg"] for row in rows) if rows else 0.0,
             "p50_latency_ms": statistics.median(row["latency_ms"] for row in rows) if rows else 0.0,
-            "p95_latency_ms": sorted(row["latency_ms"] for row in rows)[max(0, math.ceil(len(rows) * 0.95) - 1)] if rows else 0.0,
+            "p95_latency_ms": sorted(row["latency_ms"] for row in rows)[
+                max(0, math.ceil(len(rows) * 0.95) - 1)
+            ]
+            if rows
+            else 0.0,
         }
     return summary
