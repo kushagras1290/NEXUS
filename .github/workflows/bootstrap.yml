@@ -1,57 +1,13 @@
-name: Bootstrap NEXUS
+name: Bootstrap NEXUS (disabled)
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - ".github/workflows/bootstrap.yml"
+  workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
-  bootstrap:
-    if: github.actor != 'github-actions[bot]'
+  disabled:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Verify and materialize source tree
-        shell: bash
-        run: |
-          set -euo pipefail
-          base64 --decode .bootstrap/source.b64 > /tmp/nexus-source.tar.gz
-          echo "20d8f279ad1ff1394612f28dfbd43837bea84c4bc95aeca71d0c81860e762b31  /tmp/nexus-source.tar.gz" | sha256sum --check --strict
-          tar -xzf /tmp/nexus-source.tar.gz -C .
-          rm -f .bootstrap/source.b64 BOOTSTRAP.md
-          rmdir .bootstrap
-
-      - name: Generate full EUKB corpus
-        shell: bash
-        run: |
-          set -euo pipefail
-          python tools/generate_eukb.py --output data/full --documents 50000 --eval-queries 5000
-          python - <<'PY'
-          import json
-          from pathlib import Path
-          manifest = json.loads(Path("data/full/manifest.json").read_text())
-          assert manifest["documents"] == 50000, manifest
-          assert manifest["chunks"] == 402861, manifest
-          assert manifest["evaluation_queries"] == 5000, manifest
-          print(json.dumps(manifest, indent=2))
-          PY
-
-      - name: Commit materialized application and dataset
-        shell: bash
-        run: |
-          set -euo pipefail
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A
-          git commit -m "feat: build NEXUS platform and EUKB corpus"
-          git push origin HEAD:main
+      - run: echo "Bootstrap completed; this workflow is retained only for audit history."
