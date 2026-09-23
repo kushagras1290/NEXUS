@@ -1,6 +1,7 @@
 from __future__ import annotations
 
-import math\nimport time
+import math
+import time
 
 from qdrant_client import AsyncQdrantClient, models
 
@@ -29,39 +30,49 @@ class QdrantRetriever:
     @staticmethod
     def _filter(query: RetrievalQuery) -> models.Filter:
         must: list[models.Condition] = [
-            models.FieldCondition(key="status", match=models.MatchValue(value="ACTIVE")),
             models.FieldCondition(
-                key="allowed_roles", match=models.MatchAny(any=[query.user.role])
+                key="status",
+                match=models.MatchValue(value="ACTIVE"),
             ),
             models.FieldCondition(
-                key="acl_departments", match=models.MatchAny(any=["*", query.user.department])
+                key="allowed_roles",
+                match=models.MatchAny(any=[query.user.role]),
             ),
             models.FieldCondition(
-                key="country", match=models.MatchAny(any=["GLOBAL", query.user.country])
+                key="acl_departments",
+                match=models.MatchAny(any=["*", query.user.department]),
+            ),
+            models.FieldCondition(
+                key="country",
+                match=models.MatchAny(any=["GLOBAL", query.user.country]),
             ),
         ]
         if query.filters.department:
             must.append(
                 models.FieldCondition(
-                    key="department", match=models.MatchAny(any=query.filters.department)
+                    key="department",
+                    match=models.MatchAny(any=query.filters.department),
                 )
             )
         if query.filters.category:
             must.append(
                 models.FieldCondition(
-                    key="category", match=models.MatchAny(any=query.filters.category)
+                    key="category",
+                    match=models.MatchAny(any=query.filters.category),
                 )
             )
         if query.filters.document_type:
             must.append(
                 models.FieldCondition(
-                    key="document_type", match=models.MatchAny(any=query.filters.document_type)
+                    key="document_type",
+                    match=models.MatchAny(any=query.filters.document_type),
                 )
             )
         if query.filters.country:
             must.append(
                 models.FieldCondition(
-                    key="country", match=models.MatchAny(any=query.filters.country)
+                    key="country",
+                    match=models.MatchAny(any=query.filters.country),
                 )
             )
         return models.Filter(must=must)
