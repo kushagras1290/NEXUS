@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-import time
+import math\nimport time
 
 from qdrant_client import AsyncQdrantClient, models
 
@@ -23,12 +23,12 @@ class QdrantRetriever:
         self.client = AsyncQdrantClient(
             url=url,
             api_key=api_key or None,
-            timeout=timeout_seconds,
+            timeout=max(1, math.ceil(timeout_seconds)),
         )
 
     @staticmethod
     def _filter(query: RetrievalQuery) -> models.Filter:
-        must: list[models.FieldCondition] = [
+        must: list[models.Condition] = [
             models.FieldCondition(key="status", match=models.MatchValue(value="ACTIVE")),
             models.FieldCondition(
                 key="allowed_roles", match=models.MatchAny(any=[query.user.role])
