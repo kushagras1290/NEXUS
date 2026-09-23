@@ -2,13 +2,13 @@ from __future__ import annotations
 
 import time
 import uuid
-from contextlib import asynccontextmanager
+from collections.abc import AsyncIterator\nfrom contextlib import asynccontextmanager
 
 import structlog
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import Response
-from prometheus_client import CONTENT_TYPE_LATEST, generate_latest
+from prometheus_client import CONTENT_TYPE_LATEST, generate_latest\nfrom starlette.middleware.base import RequestResponseEndpoint
 
 from .config import get_settings
 from .dependencies import build_search_service
@@ -23,7 +23,7 @@ log = structlog.get_logger("nexus.api")
 
 
 @asynccontextmanager
-async def lifespan(app: FastAPI):
+async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     app.state.search_service = build_search_service(settings)
     log.info("nexus_started", env=settings.env)
     try:
@@ -60,7 +60,7 @@ app.add_middleware(
 
 
 @app.middleware("http")
-async def request_context(request: Request, call_next):
+async def request_context(\n    request: Request, call_next: RequestResponseEndpoint\n) -> Response:
     request_id = request.headers.get("X-Request-ID") or str(uuid.uuid4())
     started = time.perf_counter()
     structlog.contextvars.bind_contextvars(request_id=request_id, path=request.url.path)
