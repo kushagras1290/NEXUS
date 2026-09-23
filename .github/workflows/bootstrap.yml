@@ -26,9 +26,10 @@ jobs:
         run: |
           set -euo pipefail
           base64 --decode .bootstrap/source.b64 > /tmp/nexus-source.tar.gz
-          echo "f75892732e7227f7c25eec4be1efa70b0c98bbeee765fd6d8216afce32b463d2  /tmp/nexus-source.tar.gz" | sha256sum --check --strict
+          echo "20d8f279ad1ff1394612f28dfbd43837bea84c4bc95aeca71d0c81860e762b31  /tmp/nexus-source.tar.gz" | sha256sum --check --strict
           tar -xzf /tmp/nexus-source.tar.gz -C .
-          rm -rf .bootstrap BOOTSTRAP.md .github/workflows/bootstrap.yml
+          rm -f .bootstrap/source.b64 BOOTSTRAP.md
+          rmdir .bootstrap
 
       - name: Generate full EUKB corpus
         shell: bash
