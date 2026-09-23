@@ -18,10 +18,10 @@ class FastEmbedder:
         vectors = list(self._model.embed([text]))
         if not vectors:
             raise RuntimeError("Embedding model returned no vector")
-        return vectors[0].astype(float).tolist()
+        return [float(value) for value in vectors[0]]
 
     async def embed(self, text: str) -> list[float]:
         return await asyncio.to_thread(self._embed_sync, text)
 
     def embed_batch_sync(self, texts: list[str]) -> list[list[float]]:
-        return [vector.astype(float).tolist() for vector in self._model.embed(texts)]
+        return [[float(value) for value in vector] for vector in self._model.embed(texts)]
