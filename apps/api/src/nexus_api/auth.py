@@ -2,8 +2,8 @@ from __future__ import annotations
 
 import asyncio
 from dataclasses import dataclass
+from typing import cast
 
-import httpx
 import jwt
 from fastapi import Depends, Header, HTTPException, status
 from jwt import PyJWKClient
@@ -21,7 +21,7 @@ class OIDCVerifier:
     def verify(self, token: str) -> dict[str, object]:
         client = PyJWKClient(self.jwks_url, cache_keys=True, lifespan=300)
         signing_key = client.get_signing_key_from_jwt(token)
-        return jwt.decode(
+        decoded = jwt.decode(
             token,
             signing_key.key,
             algorithms=["RS256", "ES256"],
@@ -29,6 +29,7 @@ class OIDCVerifier:
             issuer=self.issuer,
             options={"require": ["exp", "iat", "sub"]},
         )
+        return cast(dict[str, object], decoded)
 
 
 def _claim_as_string(claims: dict[str, object], key: str, default: str) -> str:
@@ -52,7 +53,8 @@ async def get_user_context(
 
     if not authorization or not authorization.startswith("Bearer "):
         raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED, detail="Bearer token required"
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Bearer token required",
         )
 
     token = authorization.removeprefix("Bearer ").strip()
@@ -63,9 +65,10 @@ async def get_user_context(
     )
     try:
         claims = await asyncio.to_thread(verifier.verify, token)
-    except (jwt.PyJWTError, httpx.HTTPError, ValueError) as exc:
+    except (jwt.PyJWTError, ValueError) as exc:
         raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token"
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid token",
         ) from exc
 
     return UserContext(
